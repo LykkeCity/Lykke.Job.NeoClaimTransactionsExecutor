@@ -2,7 +2,7 @@
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Events
 {
-    public class TransactionBroadcastedEvent
+    public class LockReleasedEvent
     {
         public Guid TransactionId { get; set; }
     }

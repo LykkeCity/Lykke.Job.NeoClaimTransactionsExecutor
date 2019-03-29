@@ -2,10 +2,8 @@
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands
 {
-    public class BroadcastTransactionCommand
+    public class ReleaseLockCommand
     {
         public Guid TransactionId { get; set; }
-
-        public string SignedTransactionContext { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Events
 {
     public class TransactionSignedEvent
     {
-        public Guid OperationId { get; set; }
+        public Guid TransactionId { get; set; }
 
         public string SignedTransactionContext { get; set; }
     }

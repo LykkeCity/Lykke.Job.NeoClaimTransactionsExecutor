@@ -4,10 +4,12 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands
 {
     public class SignTransactionCommand
     {
-        public Guid OperationId { get; set; }
+        public Guid TransactionId { get; set; }
 
         public string Address { get; set; }
 
         public string UnsignedTransactionContext { get; set; }
+
+        public string AssetId { get; set; }
     }
 }

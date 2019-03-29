@@ -4,6 +4,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands
 {
     public class LockCommand
     {
-        public Guid OperationId { get; set; }
+        public Guid TransactionId { get; set; }
     }
 }
