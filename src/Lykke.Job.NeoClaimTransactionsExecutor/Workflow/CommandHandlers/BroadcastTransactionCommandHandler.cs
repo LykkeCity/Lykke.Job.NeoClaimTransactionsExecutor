@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Common.Log;
 using JetBrains.Annotations;
+using Lykke.Common.Chaos;
 using Lykke.Common.Log;
 using Lykke.Cqrs;
 using Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands;
@@ -15,11 +16,14 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
     {
         private readonly IBlockchainApiClient _client;
         private readonly ILog _log;
+        private readonly IChaosKitty _chaosKitty;
 
         public BroadcastTransactionCommandHandler(IBlockchainApiClient client,
-            ILogFactory logFactory)
+            ILogFactory logFactory, 
+            IChaosKitty chaosKitty)
         {
             _client = client;
+            _chaosKitty = chaosKitty;
             _log = logFactory.CreateLog(this);
         }
 
@@ -27,6 +31,8 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
         public async Task<CommandHandlingResult> Handle(BroadcastTransactionCommand command, IEventPublisher publisher)
         {
             var broadcastingResult = await _client.BroadcastTransactionAsync(command.TransactionId, command.SignedTransactionContext);
+            
+            _chaosKitty.Meow(command.TransactionId);
 
             switch (broadcastingResult)
             {

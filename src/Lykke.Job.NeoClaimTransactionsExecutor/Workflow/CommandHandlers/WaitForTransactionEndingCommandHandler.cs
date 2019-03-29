@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Common.Log;
 using JetBrains.Annotations;
+using Lykke.Common.Chaos;
 using Lykke.Common.Log;
 using Lykke.Cqrs;
 using Lykke.Job.NeoClaimTransactionsExecutor.Contract;
 using Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands;
-using Lykke.Service.Assets.Client;
 using Lykke.Service.BlockchainApi.Client;
 using Lykke.Service.BlockchainApi.Contract.Transactions;
 
@@ -16,28 +16,29 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
     {
         private readonly RetryDelayProvider _retryDelayProvider;
         private readonly IBlockchainApiClient _client;
-        private readonly IAssetsService _assetsService;
         private readonly ILog _log;
+        private readonly IChaosKitty _chaosKitty;
 
         public WaitForTransactionEndingCommandHandler(RetryDelayProvider retryDelayProvider, 
             IBlockchainApiClient client, 
-            IAssetsService assetsService, 
-            ILog log)
+            ILog log, 
+            IChaosKitty chaosKitty)
         {
             _retryDelayProvider = retryDelayProvider;
             _client = client;
-            _assetsService = assetsService;
             _log = log;
+            _chaosKitty = chaosKitty;
         }
 
         [UsedImplicitly]
         public async Task<CommandHandlingResult> Handle(WaitForTransactionEndingCommand command,
             IEventPublisher publisher)
         {
-            var asset = await _assetsService.AssetGetAsync(command.AssetId);
-            var blockchainAsset = await _client.GetAssetAsync(asset.BlockchainIntegrationLayerAssetId);
+            var blockchainAsset = await _client.GetAssetAsync(command.BlockchainIntegrationLayerAssetId);
 
             var tx = await _client.TryGetBroadcastedSingleTransactionAsync(command.TransactionId, blockchainAsset);
+
+            _chaosKitty.Meow(command.TransactionId);
 
             if (tx == null)
             {
@@ -67,7 +68,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
                     });
 
                     return CommandHandlingResult.Ok();
-
                 default:
                     throw new ArgumentOutOfRangeException
                     (
