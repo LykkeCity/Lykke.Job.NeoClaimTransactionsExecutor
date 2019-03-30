@@ -6,9 +6,12 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
     {
         private TransactionExecutionAggregate(Guid transactionId, 
             string address, 
-            string assetId, 
-            string blockchainIntegrationLayerId, 
-            string blockchainIntegrationLayerAssetId,
+            string neoAssetId,
+            string gasAssetId,
+            string neoBlockchainIntegrationLayerId, 
+            string neoBlockchainIntegrationLayerAssetId,
+            string gasBlockchainIntegrationLayerId,
+            string gasBlockchainIntegrationLayerAssetId,
             string unsignedTransactionContext, 
             decimal? claimedGas, 
             decimal? allGas, 
@@ -25,9 +28,12 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         {
             TransactionId = transactionId;
             Address = address;
-            AssetId = assetId;
-            BlockchainIntegrationLayerId = blockchainIntegrationLayerId;
-            BlockchainIntegrationLayerAssetId = blockchainIntegrationLayerAssetId;
+            NeoAssetId = neoAssetId;
+            GasAssetId = gasAssetId;
+            NeoBlockchainIntegrationLayerId = neoBlockchainIntegrationLayerId;
+            NeoBlockchainIntegrationLayerAssetId = neoBlockchainIntegrationLayerAssetId;
+            GasBlockchainIntegrationLayerId = gasBlockchainIntegrationLayerId;
+            GasBlockchainIntegrationLayerAssetId = gasBlockchainIntegrationLayerAssetId;
             UnsignedTransactionContext = unsignedTransactionContext;
             ClaimedGas = claimedGas;
             AllGas = allGas;
@@ -47,11 +53,17 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public string Address { get; }
 
-        public string AssetId { get; }
+        public string NeoAssetId { get; }
 
-        public string BlockchainIntegrationLayerId { get; private set; }
+        public string GasAssetId { get; }
 
-        public string BlockchainIntegrationLayerAssetId { get; private set; }
+        public string NeoBlockchainIntegrationLayerId { get; private set; }
+
+        public string NeoBlockchainIntegrationLayerAssetId { get; private set; }
+
+        public string GasBlockchainIntegrationLayerId { get; private set; }
+
+        public string GasBlockchainIntegrationLayerAssetId { get; private set; }
 
         public string UnsignedTransactionContext { get; private set; }
 
@@ -91,13 +103,17 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public static TransactionExecutionAggregate StartNew(Guid transactionId,
             string address,
-            string assetId)
+            string neoAssetId,
+            string gasAssetId)
         {
             return new TransactionExecutionAggregate(transactionId: transactionId, 
                 address: address,
-                assetId: assetId,
-                blockchainIntegrationLayerId: null,
-                blockchainIntegrationLayerAssetId: null, 
+                neoAssetId: neoAssetId,
+                gasAssetId: gasAssetId,
+                neoBlockchainIntegrationLayerId: null,
+                neoBlockchainIntegrationLayerAssetId: null,
+                gasBlockchainIntegrationLayerId: null,
+                gasBlockchainIntegrationLayerAssetId: null,
                 unsignedTransactionContext: null,
                 claimedGas: null,
                 allGas: null, 
@@ -138,7 +154,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             }
         }
 
-        public void OnAssetInfoRetrieved(DateTime time, string blockchainIntegrationLayerAssetId, string blockchainIntegrationLayerId)
+        public void OnAssetInfoRetrieved(DateTime time, 
+            string neoBlockchainIntegrationLayerAssetId,
+            string neoBlockchainIntegrationLayerId,
+            string gasBlockchainIntegrationLayerAssetId,
+            string gasBlockchainIntegrationLayerId)
         {
             if (!LockAcquired)
             {
@@ -149,8 +169,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             {
                 AssetInfoRetrievedAt = time;
 
-                BlockchainIntegrationLayerAssetId = blockchainIntegrationLayerAssetId;
-                BlockchainIntegrationLayerId = blockchainIntegrationLayerId;
+                NeoBlockchainIntegrationLayerAssetId = neoBlockchainIntegrationLayerAssetId;
+                NeoBlockchainIntegrationLayerId = neoBlockchainIntegrationLayerId;
+
+                GasBlockchainIntegrationLayerAssetId = gasBlockchainIntegrationLayerAssetId;
+                GasBlockchainIntegrationLayerId = gasBlockchainIntegrationLayerId;
             }
         }
 

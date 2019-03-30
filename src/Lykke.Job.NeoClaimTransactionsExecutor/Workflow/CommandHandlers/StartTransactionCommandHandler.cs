@@ -23,7 +23,8 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
             {
                 TransactionId = command.TransactionId,
                 Address = command.Address,
-                AssetId = command.AssetId
+                NeoAssetId = command.NeoAssetId,
+                GasAssetId = command.GasAssetId
             });
 
             _chaosKitty.Meow(command.TransactionId);

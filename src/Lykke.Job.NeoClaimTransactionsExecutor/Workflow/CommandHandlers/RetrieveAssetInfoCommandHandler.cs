@@ -22,14 +22,18 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
         [UsedImplicitly]
         public async Task<CommandHandlingResult> Handle(RetrieveAssetInfoCommand command, IEventPublisher publisher)
         {
-            var asset = await _assetsService.AssetGetAsync(command.AssetId);
+            var neoAsset = await _assetsService.AssetGetAsync(command.NeoAssetId);
+            var gasAsset = await _assetsService.AssetGetAsync(command.GasAssetId);
 
             publisher.PublishEvent(new AssetInfoRetrievedEvent
             {
                 TransactionId = command.TransactionId,
-                AssetId = command.AssetId,
-                BlockchainIntegrationLayerId = asset.BlockchainIntegrationLayerId,
-                BlockchainIntegrationLayerAssetId = asset.BlockchainIntegrationLayerAssetId
+                NeoAssetId = command.NeoAssetId,
+                NeoBlockchainIntegrationLayerId = neoAsset.BlockchainIntegrationLayerId,
+                NeoBlockchainIntegrationLayerAssetId = neoAsset.BlockchainIntegrationLayerAssetId,
+                GasAssetId = command.GasAssetId,
+                GasBlockchainIntegrationLayerId = gasAsset.BlockchainIntegrationLayerId,
+                GasBlockchainIntegrationLayerAssetId = gasAsset.BlockchainIntegrationLayerAssetId
             });
 
             _chaosKitty.Meow(command.TransactionId);

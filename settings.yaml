@@ -1,9 +1,33 @@
 NeoClaimTransactionsExecutorJob:
-  Db:
-    LogsConnString:
-      settings-key: NeoClaimTransactionsExecutorJob-LogsConnString
-      types:
-        - AzureTableStorage
+    Db:
+        LogsConnString:
+            settings-key: NeoClaimTransactionsExecutorJob-LogsConnString
+            types:
+                - AzureTableStorage
+        DataConnString:
+            settings-key: NeoClaimTransactionsExecutorJob-DataConnString
+            types:
+                - AzureTableStorage
+    Cqrs:
+        RabbitConnectionString:
+            settings-key: CqrsRabbitConnString
+            types:
+                - RabbitMq
+        RetryDelay:        
+            settings-key: NeoClaimTransactionsExecutorJob-Cqrs-RetryDelay
+    NeoHotWalletAddress:
+        settings-key: NeoClaimTransactionsExecutorJob-NeoHotWalletAddress
+    NeoAssetId:
+        settings-key: NeoClaimTransactionsExecutorJob-NeoAssetId
+    GasAssetId:
+        settings-key: NeoClaimTransactionsExecutorJob-GasAssetId
+    PeriodBetweenClaims:
+        settings-key: NeoClaimTransactionsExecutorJob-PeriodBetweenClaims
+    SignFacadeApiKey:
+        settings-key: NeoClaimTransactionsExecutorJob-SignFacadeApiKey
+    ChaosKitty:
+        StateOfChaos:
+            settings-key: NeoClaimTransactionsExecutorJob-ChaosKittyState
 SlackNotifications:
     AzureQueue:
         ConnectionString:

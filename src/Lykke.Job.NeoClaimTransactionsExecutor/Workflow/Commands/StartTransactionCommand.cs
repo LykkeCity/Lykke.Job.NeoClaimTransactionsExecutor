@@ -6,7 +6,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands
     {
         public Guid TransactionId { get; set; }
 
-        public string AssetId { get; set; }
+        public string NeoAssetId { get; set; }
+
+        public string GasAssetId { get; set; }
 
         public string Address { get; set; }
     }

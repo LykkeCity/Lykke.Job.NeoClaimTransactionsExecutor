@@ -27,7 +27,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
         {
             var transactionSigningResult = await _client.SignTransactionAsync
             (
-                blockchainType: command.BlockchainIntegrationLayerId,
+                blockchainType: command.NeoBlockchainIntegrationLayerId,
                 request: new SignTransactionRequest
                 {
                     PublicAddresses = new[] { command.Address },
