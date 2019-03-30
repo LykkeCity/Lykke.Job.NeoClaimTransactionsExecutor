@@ -83,7 +83,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
                 TransactionId = aggregate.TransactionId,
                 Address = aggregate.Address
             }, Self);
-
         }
 
         [UsedImplicitly]
@@ -148,6 +147,22 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
             var aggregate = await _repository.GetAsync(evt.TransactionId);
 
             aggregate.OnTransactionExecuted(evt.BroadcastingMoment, evt.TransactionHash, evt.BroadcastingBlock);
+            await _repository.SaveAsync(aggregate);
+
+            _chaosKitty.Meow(aggregate.TransactionId);
+
+            sender.SendCommand(new ClearTransactionCommand
+            {
+                TransactionId = aggregate.TransactionId
+            }, Self);
+        }
+
+        [UsedImplicitly]
+        private async Task Handle(TransactionClearedEvent evt, ICommandSender sender)
+        {
+            var aggregate = await _repository.GetAsync(evt.TransactionId);
+
+            aggregate.OnTransactionCleared(DateTime.UtcNow);
             await _repository.SaveAsync(aggregate);
 
             _chaosKitty.Meow(aggregate.TransactionId);

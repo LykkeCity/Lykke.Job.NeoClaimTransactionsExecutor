@@ -86,6 +86,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         public DateTime? TransactionExecutedAt { get; private set; }
         public bool TransactionExecuted => TransactionExecutedAt != null;
 
+        public DateTime? TransactionClearedAt { get; private set; }
+        public bool TransactionCleared => TransactionClearedAt != null;
+
         public static TransactionExecutionAggregate StartNew(Guid transactionId,
             string address,
             string assetId)
@@ -112,6 +115,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public void OnLockAcquired(DateTime time)
         {
+            if (LockRejected)
+            {
+                throw new ArgumentException($"Invalid switch at {nameof(OnLockAcquired)} for {TransactionId}");
+            }
+
             if (!LockAcquired)
             {
                 LockAcquiredAt = time;
@@ -119,6 +127,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         }
         public void OnLockRejected(DateTime time)
         {
+            if (LockAcquired)
+            {
+                throw new ArgumentException($"Invalid switch at {nameof(OnLockRejected)} for {TransactionId}");
+            }
+
             if (!LockRejected)
             {
                 LockRejectedAt = time;
@@ -129,7 +142,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         {
             if (!LockAcquired)
             {
-                throw new ArgumentException("In future state");
+                throw new ArgumentException($"Invalid switch at {nameof(OnAssetInfoRetrieved)} for {TransactionId}");
             }
 
             if (!AssetInfoRetrieved)
@@ -146,7 +159,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         {
             if (!AssetInfoRetrieved)
             {
-                throw new ArgumentException("In future state");
+                throw new ArgumentException($"Invalid switch at {nameof(OnTransactionBuilt)} for {TransactionId}");
             }
 
             if (!TransactionBuilt)
@@ -164,7 +177,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         {
             if (!TransactionBuilt)
             {
-                throw new ArgumentException("In future state");
+                throw new ArgumentException($"Invalid switch at {nameof(OnTransactionSigned)} for {TransactionId}");
             }
 
             if (!TransactionSigned)
@@ -179,7 +192,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         {
             if (!TransactionSigned)
             {
-                throw new ArgumentException("In future state");
+                throw new ArgumentException($"Invalid switch at {nameof(OnTransactionBroadcasted)} for {TransactionId}");
             }
 
             if (!TransactionBroadcasted)
@@ -192,7 +205,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         {
             if (!TransactionBroadcasted)
             {
-                throw new ArgumentException("In future state");
+                throw new ArgumentException($"Invalid switch at {nameof(OnTransactionExecuted)} for {TransactionId}");
             }
 
             if (!TransactionExecuted)
@@ -200,6 +213,19 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 TransactionExecutedAt = time;
                 TransactionHash = transactionHash;
                 BroadcastingBlock = block;
+            }
+        }
+
+        public void OnTransactionCleared(DateTime time)
+        {
+            if (!TransactionExecuted)
+            {
+                throw new ArgumentException($"Invalid switch at {nameof(OnTransactionCleared)} for {TransactionId}");
+            }
+
+            if (!TransactionCleared)
+            {
+                TransactionClearedAt = time;
             }
         }
     }
