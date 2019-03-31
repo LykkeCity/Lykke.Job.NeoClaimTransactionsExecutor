@@ -25,6 +25,12 @@ NeoClaimTransactionsExecutorJob:
         settings-key: NeoClaimTransactionsExecutorJob-PeriodBetweenClaims
     SignFacadeApiKey:
         settings-key: NeoClaimTransactionsExecutorJob-SignFacadeApiKey
+    SignFacadeUrl:
+        settings-key: NeoClaimTransactionsExecutorJob-SignFacadeUrl
+    NeoApiUrl:
+        settings-key: NeoClaimTransactionsExecutorJob-NeoApiUrl
+    AssetsServiceUrl:
+        settings-key: NeoClaimTransactionsExecutorJob-AssetsServiceUrl
     ChaosKitty:
         StateOfChaos:
             settings-key: NeoClaimTransactionsExecutorJob-ChaosKittyState
