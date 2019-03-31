@@ -101,6 +101,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         public DateTime? TransactionClearedAt { get; private set; }
         public bool TransactionCleared => TransactionClearedAt != null;
 
+        public DateTime? LockReleasedAt { get; private set; }
+        public bool LockReleased => LockReleasedAt != null;
+
         public static TransactionExecutionAggregate StartNew(Guid transactionId,
             string address,
             string neoAssetId,
@@ -249,6 +252,19 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             if (!TransactionCleared)
             {
                 TransactionClearedAt = time;
+            }
+        }
+
+        public void OnLockReleased(DateTime time)
+        {
+            if (!TransactionCleared)
+            {
+                throw new ArgumentException($"Invalid switch at {nameof(OnLockReleased)} for {TransactionId}");
+            }
+
+            if (!LockReleased)
+            {
+                LockReleasedAt = time;
             }
         }
     }

@@ -169,6 +169,22 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
             await _repository.SaveAsync(aggregate);
 
             _chaosKitty.Meow(aggregate.TransactionId);
+
+            sender.SendCommand(new ReleaseLockCommand
+            {
+                TransactionId = aggregate.TransactionId
+            }, Self);
+        }
+
+        [UsedImplicitly]
+        private async Task Handle(LockReleasedEvent evt, ICommandSender sender)
+        {
+            var aggregate = await _repository.GetAsync(evt.TransactionId);
+
+            aggregate.OnLockReleased(DateTime.UtcNow);
+            await _repository.SaveAsync(aggregate);
+
+            _chaosKitty.Meow(aggregate.TransactionId);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using MessagePack;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Contract
 {
+    [MessagePackObject(keyAsPropertyName: true)]
     public class GasClaimTransactionExecutedEvent
     {
         public Guid TransactionId { get; set; }

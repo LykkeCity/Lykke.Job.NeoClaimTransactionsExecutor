@@ -7,12 +7,12 @@ using Lykke.Service.BlockchainApi.Client;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
 {
-    public class ClearBroadcastedCommandHandler
+    public class ClearTransactionCommandHandler
     {
         private readonly IChaosKitty _chaosKitty;
         private readonly IBlockchainApiClient _client;
 
-        public ClearBroadcastedCommandHandler(IChaosKitty chaosKitty, IBlockchainApiClient client)
+        public ClearTransactionCommandHandler(IChaosKitty chaosKitty, IBlockchainApiClient client)
         {
             _chaosKitty = chaosKitty;
             _client = client;

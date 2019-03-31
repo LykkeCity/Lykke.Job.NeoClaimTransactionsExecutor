@@ -1,6 +1,5 @@
 ﻿using System;
 using Lykke.Common.Chaos;
-using Lykke.SettingsReader.Attributes;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings
 {
