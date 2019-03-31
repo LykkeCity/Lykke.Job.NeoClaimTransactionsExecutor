@@ -1,11 +1,7 @@
 ﻿using Autofac;
 using Common.Log;
 using Lykke.Common.Log;
-using Lykke.Job.NeoClaimTransactionsExecutor.Services;
 using Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings;
-using Lykke.Sdk;
-using Lykke.Sdk.Health;
-using Lykke.Service.Assets.Client;
 using Lykke.Service.BlockchainApi.Client;
 using Lykke.Service.BlockchainSignFacade.Client;
 using Lykke.SettingsReader;

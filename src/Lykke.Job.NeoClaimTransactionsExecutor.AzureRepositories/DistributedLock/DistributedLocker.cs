@@ -6,7 +6,7 @@ using Lykke.Common.Log;
 using Lykke.Job.NeoClaimTransactionsExecutor.Domain.Repositories;
 using Lykke.SettingsReader;
 
-namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories
+namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.DistributedLock
 {
     public class DistributedLocker:IDistributedLocker
     {

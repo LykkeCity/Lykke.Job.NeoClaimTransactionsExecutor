@@ -100,6 +100,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
 
                     .ListeningCommands(typeof(StartTransactionCommand))
                     .On(defaultRoute)
+                    .WithLoopback()
                     .WithCommandsHandler<StartTransactionCommandHandler>()
                     .PublishingEvents(typeof(TransactionStartedtEvent))
                     .With(commandsPipeline)

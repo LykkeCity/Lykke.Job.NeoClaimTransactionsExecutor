@@ -4,7 +4,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 {
     public class TransactionExecutionAggregate
     {
-        private TransactionExecutionAggregate(Guid transactionId, 
+        private TransactionExecutionAggregate(
+            string version,
+            Guid transactionId, 
             string address, 
             string neoAssetId,
             string gasAssetId,
@@ -47,7 +49,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             TransactionSignedAt = transactionSignedAt;
             TransactionBroadcastedAt = transactionBroadcastedAt;
             TransactionExecutedAt = transactionExecutedAt;
+            Version = version;
         }
+
+        public string Version { get; }
 
         public Guid TransactionId { get; }
 
@@ -109,7 +114,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             string neoAssetId,
             string gasAssetId)
         {
-            return new TransactionExecutionAggregate(transactionId: transactionId, 
+            return new TransactionExecutionAggregate(
+                version: "*",
+                transactionId: transactionId, 
                 address: address,
                 neoAssetId: neoAssetId,
                 gasAssetId: gasAssetId,
@@ -130,6 +137,55 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 transactionSignedAt:null,
                 transactionBroadcastedAt: null, 
                 transactionExecutedAt: null);
+        }
+
+        public static TransactionExecutionAggregate Restore(
+            string version,
+            Guid transactionId,
+            string address,
+            string neoAssetId,
+            string gasAssetId,
+            string neoBlockchainIntegrationLayerId,
+            string neoBlockchainIntegrationLayerAssetId,
+            string gasBlockchainIntegrationLayerId,
+            string gasBlockchainIntegrationLayerAssetId,
+            string unsignedTransactionContext,
+            decimal? claimedGas,
+            decimal? allGas,
+            string signedTransactionContext,
+            string transactionHash,
+            long? broadcastingBlock,
+            DateTime? lockAcquiredAt,
+            DateTime? lockRejectedAt,
+            DateTime? assetInfoRetrievedAt,
+            DateTime? transactionBuiltAt,
+            DateTime? transactionSignedAt,
+            DateTime? transactionBroadcastedAt,
+            DateTime? transactionExecutedAt)
+        {
+            return new TransactionExecutionAggregate(
+                version: version,
+                transactionId: transactionId,
+                address: address,
+                neoAssetId: neoAssetId,
+                gasAssetId: gasAssetId,
+                neoBlockchainIntegrationLayerId: neoBlockchainIntegrationLayerId,
+                neoBlockchainIntegrationLayerAssetId: neoBlockchainIntegrationLayerAssetId,
+                gasBlockchainIntegrationLayerId: gasBlockchainIntegrationLayerId,
+                gasBlockchainIntegrationLayerAssetId: gasBlockchainIntegrationLayerAssetId,
+                unsignedTransactionContext: unsignedTransactionContext,
+                claimedGas: claimedGas,
+                allGas: allGas,
+                signedTransactionContext: signedTransactionContext,
+                transactionHash: transactionHash,
+                broadcastingBlock: broadcastingBlock,
+                lockAcquiredAt: lockAcquiredAt,
+                lockRejectedAt: lockRejectedAt,
+                assetInfoRetrievedAt: assetInfoRetrievedAt,
+                transactionBuiltAt: transactionBuiltAt,
+                transactionSignedAt: transactionSignedAt,
+                transactionBroadcastedAt: transactionBroadcastedAt,
+                transactionExecutedAt: transactionExecutedAt);
         }
 
         public void OnLockAcquired(DateTime time)

@@ -14,10 +14,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
     {
         private static string Self => NeoClaimTransactionsExecutorBoundedContext.Name;
 
-        private readonly IAggregateRepository<TransactionExecutionAggregate> _repository;
+        private readonly ITransactionExecutionsRepository _repository;
         private readonly IChaosKitty _chaosKitty;
 
-        public TransactionExecutionSaga(IAggregateRepository<TransactionExecutionAggregate> repository,
+        public TransactionExecutionSaga(ITransactionExecutionsRepository repository,
             IChaosKitty chaosKitty)
         {
             _repository = repository;
