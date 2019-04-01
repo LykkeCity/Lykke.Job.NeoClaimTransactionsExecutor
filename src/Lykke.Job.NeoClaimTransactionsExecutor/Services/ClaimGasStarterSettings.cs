@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Lykke.Job.NeoClaimTransactionsExecutor.Services
+﻿namespace Lykke.Job.NeoClaimTransactionsExecutor.Services
 {
     public class ClaimGasStarterSettings
     {
-        public string NeoAssetId { get; set; }
+        public ClaimGasStarterSettings(string neoAssetId, 
+            string gasAssetId, 
+            string claimTriggerCronExpression, 
+            string neoHotWalletAddress)
+        {
+            NeoAssetId = neoAssetId;
+            GasAssetId = gasAssetId;
+            ClaimTriggerCronExpression = claimTriggerCronExpression;
+            NeoHotWalletAddress = neoHotWalletAddress;
+        }
 
-        public string GasAssetId { get; set; }
+        public string NeoAssetId { get; }
 
-        public string ClaimTriggerCronExpression { get; set; }
+        public string GasAssetId { get; }
 
-        public string NeoHotWalletAddress { get; set; }
+        public string ClaimTriggerCronExpression { get; }
 
-
+        public string NeoHotWalletAddress { get; }
     }
 }

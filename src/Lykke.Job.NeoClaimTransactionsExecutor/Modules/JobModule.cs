@@ -32,13 +32,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
 
             builder.RegisterType<StartupManager>()
                 .As<IStartupManager>()
-                .WithParameter(TypedParameter.From(new ClaimGasStarterSettings
-                {
-                    ClaimTriggerCronExpression = _settings.ClaimTriggerCronExpression,
-                    GasAssetId = _settings.GasAssetId,
-                    NeoAssetId = _settings.NeoAssetId,
-                    NeoHotWalletAddress = _settings.NeoHotWalletAddress
-                }))
+                .WithParameter(TypedParameter.From(new ClaimGasStarterSettings(neoAssetId: _settings.NeoAssetId,
+                        gasAssetId: _settings.GasAssetId,
+                        claimTriggerCronExpression: _settings.ClaimTriggerCronExpression, 
+                        neoHotWalletAddress: _settings.NeoHotWalletAddress)))
                 .SingleInstance();
 
             builder.RegisterType<ShutdownManager>()
