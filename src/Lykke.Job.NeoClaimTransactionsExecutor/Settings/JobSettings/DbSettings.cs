@@ -9,5 +9,8 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings
 
         [AzureTableCheck]
         public string DataConnString { get; set; }
+
+        [MongoCheck]
+        public string MongoConnString { get; set; }
     }
 }

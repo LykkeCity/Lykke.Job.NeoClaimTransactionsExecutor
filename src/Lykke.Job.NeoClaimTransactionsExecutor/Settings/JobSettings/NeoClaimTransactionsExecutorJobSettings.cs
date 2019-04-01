@@ -26,5 +26,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings
         public string NeoApiUrl { get; set; }
 
         public string AssetsServiceUrl { get; set; }
+
+        public string ClaimTriggerCronExpression { get; set; }
     }
 }

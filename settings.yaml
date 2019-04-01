@@ -8,6 +8,8 @@ NeoClaimTransactionsExecutorJob:
             settings-key: NeoClaimTransactionsExecutorJob-DataConnString
             types:
                 - AzureTableStorage
+        MongoConnString:
+            settings-key: NeoClaimTransactionsExecutorJob-MongoConnString
     Cqrs:
         RabbitConnectionString:
             settings-key: CqrsRabbitConnString
