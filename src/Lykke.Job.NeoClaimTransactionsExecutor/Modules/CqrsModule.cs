@@ -190,6 +190,13 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
                     .To(NeoClaimTransactionsExecutorBoundedContext.Name)
                     .With(commandsPipeline)
 
+                    .ListeningEvents(typeof(ClaimbaleGasNotAvailiableEvent))
+                    .From(NeoClaimTransactionsExecutorBoundedContext.Name)
+                    .On(defaultRoute)
+                    .PublishingCommands(typeof(ReleaseLockCommand))
+                    .To(NeoClaimTransactionsExecutorBoundedContext.Name)
+                    .With(commandsPipeline)
+
                     .ListeningEvents(typeof(TransactionSignedEvent))
                     .From(NeoClaimTransactionsExecutorBoundedContext.Name)
                     .On(defaultRoute)
