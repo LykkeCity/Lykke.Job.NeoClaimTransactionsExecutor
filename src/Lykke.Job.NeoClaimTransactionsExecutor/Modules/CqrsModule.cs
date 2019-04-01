@@ -120,7 +120,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
                     .ListeningCommands(typeof(BuildTransactionCommand))
                     .On(defaultRoute)
                     .WithCommandsHandler<BuildTransactionCommandHandler>()
-                    .PublishingEvents(typeof(TransactionBuiltEvent))
+                    .PublishingEvents(typeof(TransactionBuiltEvent), typeof(ClaimbaleGasNotAvailiableEvent))
                     .With(commandsPipeline)
 
                     .ListeningCommands(typeof(SignTransactionCommand))

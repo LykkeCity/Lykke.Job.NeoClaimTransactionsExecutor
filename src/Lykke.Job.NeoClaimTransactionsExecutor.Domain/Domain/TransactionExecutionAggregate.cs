@@ -24,6 +24,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             DateTime? lockRejectedAt, 
             DateTime? assetInfoRetrievedAt,
             DateTime? transactionBuiltAt, 
+            DateTime? claimableGasNotAvailableReportedAt,
             DateTime? transactionSignedAt, 
             DateTime? transactionBroadcastedAt, 
             DateTime? transactionExecutedAt)
@@ -46,6 +47,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             LockRejectedAt = lockRejectedAt;
             AssetInfoRetrievedAt = assetInfoRetrievedAt;
             TransactionBuiltAt = transactionBuiltAt;
+            ClaimableGasNotAvailableReportedAt = claimableGasNotAvailableReportedAt;
             TransactionSignedAt = transactionSignedAt;
             TransactionBroadcastedAt = transactionBroadcastedAt;
             TransactionExecutedAt = transactionExecutedAt;
@@ -91,6 +93,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         public DateTime? AssetInfoRetrievedAt { get; private set; }
         public bool AssetInfoRetrieved => AssetInfoRetrievedAt != null;
 
+        public DateTime? ClaimableGasNotAvailableReportedAt { get; private set; }
+        public bool ClaimableGasNotAvailable => TransactionBuiltAt != null;
+
         public DateTime? TransactionBuiltAt { get; private set; }
         public bool TransactionBuilt => TransactionBuiltAt != null;
 
@@ -134,6 +139,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 lockRejectedAt: null, 
                 assetInfoRetrievedAt: null,
                 transactionBuiltAt: null, 
+                claimableGasNotAvailableReportedAt: null,
                 transactionSignedAt:null,
                 transactionBroadcastedAt: null, 
                 transactionExecutedAt: null);
@@ -159,6 +165,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             DateTime? lockRejectedAt,
             DateTime? assetInfoRetrievedAt,
             DateTime? transactionBuiltAt,
+            DateTime? claimableGasNotAvailableReportedAt,
             DateTime? transactionSignedAt,
             DateTime? transactionBroadcastedAt,
             DateTime? transactionExecutedAt)
@@ -183,6 +190,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 lockRejectedAt: lockRejectedAt,
                 assetInfoRetrievedAt: assetInfoRetrievedAt,
                 transactionBuiltAt: transactionBuiltAt,
+                claimableGasNotAvailableReportedAt: claimableGasNotAvailableReportedAt,
                 transactionSignedAt: transactionSignedAt,
                 transactionBroadcastedAt: transactionBroadcastedAt,
                 transactionExecutedAt: transactionExecutedAt);
@@ -237,9 +245,22 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         }
 
 
+        public void OnClaimableGasNotAvailable(DateTime time)
+        {
+            if (!AssetInfoRetrieved || TransactionBuilt)
+            {
+                throw new ArgumentException($"Invalid switch at {nameof(OnTransactionBuilt)} for {TransactionId}");
+            }
+
+            if (!ClaimableGasNotAvailable)
+            {
+                ClaimableGasNotAvailableReportedAt = time;
+            }
+        }
+
         public void OnTransactionBuilt(DateTime time, string unsignedTransactionContext, decimal allGas, decimal claimedGas)
         {
-            if (!AssetInfoRetrieved)
+            if (!AssetInfoRetrieved || ClaimableGasNotAvailable)
             {
                 throw new ArgumentException($"Invalid switch at {nameof(OnTransactionBuilt)} for {TransactionId}");
             }
@@ -257,7 +278,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public void OnTransactionSigned(DateTime time, string signedTransactionContext)
         {
-            if (!TransactionBuilt)
+            if (!TransactionBuilt || ClaimableGasNotAvailable)
             {
                 throw new ArgumentException($"Invalid switch at {nameof(OnTransactionSigned)} for {TransactionId}");
             }
@@ -272,7 +293,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public void OnTransactionBroadcasted(DateTime time)
         {
-            if (!TransactionSigned)
+            if (!TransactionSigned || ClaimableGasNotAvailable)
             {
                 throw new ArgumentException($"Invalid switch at {nameof(OnTransactionBroadcasted)} for {TransactionId}");
             }
@@ -313,7 +334,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public void OnLockReleased(DateTime time)
         {
-            if (!TransactionCleared)
+            if (!TransactionCleared && !ClaimableGasNotAvailable)
             {
                 throw new ArgumentException($"Invalid switch at {nameof(OnLockReleased)} for {TransactionId}");
             }

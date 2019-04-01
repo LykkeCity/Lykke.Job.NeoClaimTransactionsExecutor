@@ -37,6 +37,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.TransactionEx
 
         public DateTime? AssetInfoRetrievedAt { get; set; }
 
+        public DateTime? ClaimableGasNotAvailableReportedAt { get; set; }
         public DateTime? TransactionBuiltAt { get; set; }
 
         public DateTime? TransactionSignedAt { get; set; }
@@ -71,6 +72,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.TransactionEx
                 NeoBlockchainIntegrationLayerId = aggregate.NeoBlockchainIntegrationLayerId,
                 TransactionBroadcastedAt = aggregate.TransactionBroadcastedAt,
                 TransactionBuiltAt = aggregate.TransactionBuiltAt,
+                ClaimableGasNotAvailableReportedAt = aggregate.ClaimableGasNotAvailableReportedAt,
                 TransactionClearedAt = aggregate.TransactionClearedAt,
                 TransactionHash = aggregate.TransactionHash,
                 TransactionSignedAt = aggregate.TransactionSignedAt,
@@ -102,6 +104,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.TransactionEx
                 lockRejectedAt: LockRejectedAt,
                 assetInfoRetrievedAt: AssetInfoRetrievedAt,
                 transactionBuiltAt: TransactionBuiltAt,
+                claimableGasNotAvailableReportedAt: ClaimableGasNotAvailableReportedAt,
                 transactionSignedAt: TransactionSignedAt,
                 transactionBroadcastedAt: TransactionBroadcastedAt,
                 transactionExecutedAt: TransactionExecutedAt);
