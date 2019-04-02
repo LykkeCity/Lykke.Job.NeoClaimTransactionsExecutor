@@ -11,12 +11,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
     public class BlockChainModule : Module
     {
         private readonly NeoClaimTransactionsExecutorJobSettings _settings;
-        private readonly IReloadingManager<NeoClaimTransactionsExecutorJobSettings> _settingsManager;
 
-        public BlockChainModule(NeoClaimTransactionsExecutorJobSettings settings, IReloadingManager<NeoClaimTransactionsExecutorJobSettings> settingsManager)
+        public BlockChainModule(NeoClaimTransactionsExecutorJobSettings settings)
         {
             _settings = settings;
-            _settingsManager = settingsManager;
         }
 
         protected override void Load(ContainerBuilder builder)
