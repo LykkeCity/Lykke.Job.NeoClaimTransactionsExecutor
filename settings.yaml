@@ -23,8 +23,6 @@ NeoClaimTransactionsExecutorJob:
         settings-key: NeoClaimTransactionsExecutorJob-NeoAssetId
     GasAssetId:
         settings-key: NeoClaimTransactionsExecutorJob-GasAssetId
-    PeriodBetweenClaims:
-        settings-key: NeoClaimTransactionsExecutorJob-PeriodBetweenClaims
     SignFacadeApiKey:
         settings-key: NeoClaimTransactionsExecutorJob-SignFacadeApiKey
     SignFacadeUrl:
@@ -33,6 +31,8 @@ NeoClaimTransactionsExecutorJob:
         settings-key: NeoClaimTransactionsExecutorJob-NeoApiUrl
     AssetsServiceUrl:
         settings-key: NeoClaimTransactionsExecutorJob-AssetsServiceUrl
+    ClaimTriggerCronExpression:
+        settings-key: NeoClaimTransactionsExecutorJob-ClaimTriggerCronExpression
     ChaosKitty:
         StateOfChaos:
             settings-key: NeoClaimTransactionsExecutorJob-ChaosKittyState

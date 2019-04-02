@@ -12,8 +12,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings
         public string NeoAssetId { get; set; }
 
         public string GasAssetId { get; set; }
-
-        public TimeSpan PeriodBetweenClaims { get; set; }
         
         public ChaosSettings ChaosKitty { get; set; }
 
