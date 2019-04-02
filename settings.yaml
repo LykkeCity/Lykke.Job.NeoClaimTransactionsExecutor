@@ -17,6 +17,8 @@ NeoClaimTransactionsExecutorJob:
                 - RabbitMq
         RetryDelay:        
             settings-key: NeoClaimTransactionsExecutorJob-Cqrs-RetryDelay
+        WaitForTransactionRetryDelay:        
+            settings-key: NeoClaimTransactionsExecutorJob-Cqrs-WaitForTransactionRetryDelay            
     NeoHotWalletAddress:
         settings-key: NeoClaimTransactionsExecutorJob-NeoHotWalletAddress
     NeoAssetId:
