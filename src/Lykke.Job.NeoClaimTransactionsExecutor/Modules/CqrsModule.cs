@@ -5,6 +5,7 @@ using Lykke.Common.Log;
 using Lykke.Cqrs;
 using Lykke.Cqrs.Configuration;
 using Lykke.Job.NeoClaimTransactionsExecutor.Contract;
+using Lykke.Job.NeoClaimTransactionsExecutor.Settings;
 using Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings;
 using Lykke.Job.NeoClaimTransactionsExecutor.Workflow;
 using Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers;
@@ -21,12 +22,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
     public class CqrsModule : Module
     {
         private readonly NeoClaimTransactionsExecutorJobSettings _settings;
-        private readonly IReloadingManager<NeoClaimTransactionsExecutorJobSettings> _settingsManager;
 
-        public CqrsModule(NeoClaimTransactionsExecutorJobSettings settings, IReloadingManager<NeoClaimTransactionsExecutorJobSettings> settingsManager)
+        public CqrsModule(IReloadingManager<AppSettings> settingsManager)
         {
-            _settings = settings;
-            _settingsManager = settingsManager;
+            _settings = settingsManager.CurrentValue.NeoClaimTransactionsExecutorJob;
         }
 
         protected override void Load(ContainerBuilder builder)

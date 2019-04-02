@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using Common.Log;
 using Lykke.Common.Log;
+using Lykke.Job.NeoClaimTransactionsExecutor.Settings;
 using Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings;
 using Lykke.Service.BlockchainApi.Client;
 using Lykke.Service.BlockchainSignFacade.Client;
+using Lykke.Service.NeoApi.Client;
 using Lykke.SettingsReader;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
@@ -12,9 +14,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
     {
         private readonly NeoClaimTransactionsExecutorJobSettings _settings;
 
-        public BlockChainModule(NeoClaimTransactionsExecutorJobSettings settings)
+        public BlockChainModule(IReloadingManager<AppSettings> settingsManager)
         {
-            _settings = settings;
+            _settings = settingsManager.CurrentValue.NeoClaimTransactionsExecutorJob;
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -25,6 +27,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
 
             builder.Register(ctx => new BlockchainApiClient(ctx.Resolve<ILogFactory>(), _settings.NeoApiUrl))
                 .As<IBlockchainApiClient>()
+                .SingleInstance();
+
+            builder.Register(ctx => new NeoClaimBuilderClient(_settings.NeoApiUrl))
+                .As<INeoClaimBuilderClient>()
                 .SingleInstance();
         }
 

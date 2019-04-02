@@ -51,6 +51,19 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor
             app.UseLykkeConfiguration(options =>
             {
                 options.SwaggerOptions = _swaggerOptions;
+
+                // TODO: Configure additional middleware for eg authentication or maintenancemode checks
+                /*
+                options.WithMiddleware = x =>
+                {
+                    x.UseMaintenanceMode<AppSettings>(settings => new MaintenanceMode
+                    {
+                        Enabled = settings.MaintenanceMode?.Enabled ?? false,
+                        Reason = settings.MaintenanceMode?.Reason
+                    });
+                    x.UseAuthentication();
+                };
+                */
             });
         }
     }

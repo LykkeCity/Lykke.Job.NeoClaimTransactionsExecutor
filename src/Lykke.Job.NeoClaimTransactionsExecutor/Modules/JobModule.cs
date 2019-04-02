@@ -4,6 +4,7 @@ using Hangfire.Mongo;
 using Lykke.Common.Chaos;
 using Lykke.Common.Log;
 using Lykke.Job.NeoClaimTransactionsExecutor.Services;
+using Lykke.Job.NeoClaimTransactionsExecutor.Settings;
 using Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings;
 using Lykke.Logs.Hangfire;
 using Lykke.Sdk;
@@ -16,12 +17,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
     public class JobModule : Module
     {
         private readonly NeoClaimTransactionsExecutorJobSettings _settings;
-        private readonly IReloadingManager<NeoClaimTransactionsExecutorJobSettings> _settingsManager;
 
-        public JobModule(NeoClaimTransactionsExecutorJobSettings settings, IReloadingManager<NeoClaimTransactionsExecutorJobSettings> settingsManager)
+        public JobModule(IReloadingManager<AppSettings> settingsManager)
         {
-            _settings = settings;
-            _settingsManager = settingsManager;
+            _settings = settingsManager.CurrentValue.NeoClaimTransactionsExecutorJob;
         }
 
         protected override void Load(ContainerBuilder builder)

@@ -21,12 +21,12 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
 
         public WaitForTransactionEndingCommandHandler(RetryDelayProvider retryDelayProvider, 
             IBlockchainApiClient client, 
-            ILog log, 
+            ILogFactory logFactory, 
             IChaosKitty chaosKitty)
         {
             _retryDelayProvider = retryDelayProvider;
             _client = client;
-            _log = log;
+            _log = logFactory.CreateLog(this);
             _chaosKitty = chaosKitty;
         }
 

@@ -27,15 +27,17 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Services
 
         public async Task StartAsync()
         {
-            RecurringJob.AddOrUpdate("claim-gas",
-                () => StartClaimTransaction(), 
-                ()=> _starterSettings.ClaimTriggerCronExpression, 
+            _cqrsEngine.StartAll();
+
+            RecurringJob.AddOrUpdate("neo-claim-gas",
+                () => StartClaimTransaction(),
+                () => _starterSettings.ClaimTriggerCronExpression,
                 TimeZoneInfo.Utc);
 
-           await Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
-        private void StartClaimTransaction()
+        public void StartClaimTransaction()
         {
             var transactionId = Guid.NewGuid();
             _log.Info($"Starting claim transaction {transactionId}", context: _starterSettings);
