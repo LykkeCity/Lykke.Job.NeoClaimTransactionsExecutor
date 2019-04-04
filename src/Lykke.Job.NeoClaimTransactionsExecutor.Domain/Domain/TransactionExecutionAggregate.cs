@@ -85,7 +85,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         public long? BroadcastingBlock { get; private set; }
 
         public DateTime? LockAcquiredAt { get; private set; }
-        public bool LockAcquired => LockRejectedAt != null;
+        public bool LockAcquired => LockAcquiredAt != null;
 
         public DateTime? LockRejectedAt { get; private set; }
         public bool LockRejected => LockRejectedAt != null;
@@ -94,7 +94,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         public bool AssetInfoRetrieved => AssetInfoRetrievedAt != null;
 
         public DateTime? ClaimableGasNotAvailableReportedAt { get; private set; }
-        public bool ClaimableGasNotAvailable => TransactionBuiltAt != null;
+        public bool ClaimableGasNotAvailable => ClaimableGasNotAvailableReportedAt != null;
 
         public DateTime? TransactionBuiltAt { get; private set; }
         public bool TransactionBuilt => TransactionBuiltAt != null;
@@ -198,11 +198,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public void OnLockAcquired(DateTime time)
         {
-            if (LockRejected)
-            {
-                throw new ArgumentException($"Invalid switch at {nameof(OnLockAcquired)} for {TransactionId}");
-            }
-
             if (!LockAcquired)
             {
                 LockAcquiredAt = time;
@@ -210,11 +205,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         }
         public void OnLockRejected(DateTime time)
         {
-            if (LockAcquired)
-            {
-                throw new ArgumentException($"Invalid switch at {nameof(OnLockRejected)} for {TransactionId}");
-            }
-
             if (!LockRejected)
             {
                 LockRejectedAt = time;

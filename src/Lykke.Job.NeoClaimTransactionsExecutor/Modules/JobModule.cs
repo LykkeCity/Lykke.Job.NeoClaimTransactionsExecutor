@@ -30,6 +30,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
                 .SingleInstance();
 
             builder.RegisterType<StartupManager>()
+                .As<StartupManager>()
                 .As<IStartupManager>()
                 .WithParameter(TypedParameter.From(new ClaimGasStarterSettings(neoAssetId: _settings.NeoAssetId,
                         gasAssetId: _settings.GasAssetId,
