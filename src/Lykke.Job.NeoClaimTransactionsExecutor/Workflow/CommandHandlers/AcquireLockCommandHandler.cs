@@ -21,12 +21,12 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
         public AcquireLockCommandHandler(IDistributedLocker locker,
             IChaosKitty chaosKitty,
             ITransactionExecutionsRepository repository, 
-            ILog log)
+            ILogFactory logFactory)
         {
             _locker = locker;
             _chaosKitty = chaosKitty;
             _repository = repository;
-            _log = log;
+            _log = logFactory.CreateLog(this);
         }
 
         [UsedImplicitly]
