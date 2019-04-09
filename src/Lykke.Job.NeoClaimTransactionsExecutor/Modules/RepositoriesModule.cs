@@ -6,6 +6,7 @@ using Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain;
 using Lykke.Job.NeoClaimTransactionsExecutor.Domain.Repositories;
 using Lykke.Job.NeoClaimTransactionsExecutor.Settings;
 using Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings;
+using Lykke.Job.NeoClaimTransactionsExecutor.Workflow;
 using Lykke.SettingsReader;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
@@ -27,6 +28,12 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
 
             builder.Register(c => DistributedLocker.Create(_settingsManager.Nested(x => x.Db.DataConnString), c.Resolve<ILogFactory>()))
                 .As<IDistributedLocker>()
+                .SingleInstance();
+
+            builder.Register(c => CommandHandlerEventRepository.Create(_settingsManager.Nested(x => x.Db.DataConnString),
+                    c.Resolve<ILogFactory>(),
+                    CommandHandlerEventConfigurer.ConfigureCapturedEvents()))
+                .As<ICommandHandlerEventRepository>()
                 .SingleInstance();
         }
     }

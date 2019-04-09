@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Lykke.Common.Chaos;
 using Lykke.Common.Log;
 using Lykke.Cqrs;
+using Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain;
 using Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands;
 using Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Events;
 using Lykke.Service.NeoApi.Client;
@@ -16,13 +17,17 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
         private readonly INeoClaimBuilderClient _claimBuilderClient;
         private readonly IChaosKitty _chaosKitty;
         private readonly ILog _log;
+        private readonly ICommandHandlerEventRepository _commandHandlerEventRepository;
+        private const string CommandHandlerId = "BuildTransactionCommandsHandler";
 
         public BuildTransactionCommandHandler(INeoClaimBuilderClient claimBuilderClient,
             IChaosKitty chaosKitty,
-            ILogFactory logFactory)
+            ILogFactory logFactory, 
+            ICommandHandlerEventRepository commandHandlerEventRepository)
         {
             _claimBuilderClient = claimBuilderClient;
             _chaosKitty = chaosKitty;
+            _commandHandlerEventRepository = commandHandlerEventRepository;
 
             _log = logFactory.CreateLog(this);
         }
@@ -31,18 +36,28 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
         public async Task<CommandHandlingResult> Handle(BuildTransactionCommand command,
             IEventPublisher publisher)
         {
+            var alreadyPublishedEvt = await _commandHandlerEventRepository.TryGetEventAsync(command.TransactionId,
+                CommandHandlerId);
+
+            if (alreadyPublishedEvt != null)
+            {
+                publisher.PublishEvent(alreadyPublishedEvt);
+
+                return CommandHandlingResult.Ok();
+            }
             try
             {
                 var res = await _claimBuilderClient.BuildClaimTransacionAsync(command.TransactionId, command.Address);
 
-                publisher.PublishEvent(new TransactionBuiltEvent
-                {
-                    TransactionId = command.TransactionId,
-                    AllGas = res.allGas,
-                    ClaimedGas = res.claimedGas,
-                    UnsignedTransactionContext = res.transactionContext
-                });
-
+                publisher.PublishEvent(await _commandHandlerEventRepository.InsertEventAsync(command.TransactionId,
+                    CommandHandlerId,
+                    new TransactionBuiltEvent
+                    {
+                        TransactionId = command.TransactionId,
+                        AllGas = res.allGas,
+                        ClaimedGas = res.claimedGas,
+                        UnsignedTransactionContext = res.transactionContext
+                    }));
             }
             catch (NeoClaimTransactionException e)
             {
@@ -52,10 +67,13 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
                         _log.Info($"Api said that claimable gas not available",
                             context: new { txId = command.TransactionId });
 
-                        publisher.PublishEvent(new ClaimbaleGasNotAvailiableEvent
-                        {
-                            TransactionId = command.TransactionId
-                        });
+                        publisher.PublishEvent(await _commandHandlerEventRepository.InsertEventAsync(command.TransactionId,
+                            CommandHandlerId,
+                            new ClaimbaleGasNotAvailiableEvent
+                            {
+                                TransactionId = command.TransactionId
+                            }));
+
                         break;
 
                     case NeoClaimTransactionException.ErrorCode.TransactionAlreadyBroadcased:
@@ -68,7 +86,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
             }
 
             _chaosKitty.Meow(command.TransactionId);
-
 
             return CommandHandlingResult.Ok();
         }
