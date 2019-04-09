@@ -27,7 +27,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             DateTime? claimableGasNotAvailableReportedAt,
             DateTime? transactionSignedAt, 
             DateTime? transactionBroadcastedAt, 
-            DateTime? transactionExecutedAt)
+            DateTime? transactionExecutedAt,
+            DateTime? transactionClearedAt,
+            DateTime? lockReleasedAt)
         {
             TransactionId = transactionId;
             Address = address;
@@ -51,6 +53,8 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             TransactionSignedAt = transactionSignedAt;
             TransactionBroadcastedAt = transactionBroadcastedAt;
             TransactionExecutedAt = transactionExecutedAt;
+            TransactionClearedAt = transactionClearedAt;
+            LockReleasedAt = lockReleasedAt;
             Version = version;
         }
 
@@ -142,7 +146,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 claimableGasNotAvailableReportedAt: null,
                 transactionSignedAt:null,
                 transactionBroadcastedAt: null, 
-                transactionExecutedAt: null);
+                transactionExecutedAt: null,
+                transactionClearedAt: null,
+                lockReleasedAt: null);
         }
 
         public static TransactionExecutionAggregate Restore(
@@ -168,7 +174,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             DateTime? claimableGasNotAvailableReportedAt,
             DateTime? transactionSignedAt,
             DateTime? transactionBroadcastedAt,
-            DateTime? transactionExecutedAt)
+            DateTime? transactionExecutedAt,
+            DateTime? transactionClearedAt,
+            DateTime? lockReleasedAt)
         {
             return new TransactionExecutionAggregate(
                 version: version,
@@ -193,7 +201,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 claimableGasNotAvailableReportedAt: claimableGasNotAvailableReportedAt,
                 transactionSignedAt: transactionSignedAt,
                 transactionBroadcastedAt: transactionBroadcastedAt,
-                transactionExecutedAt: transactionExecutedAt);
+                transactionExecutedAt: transactionExecutedAt,
+                transactionClearedAt: transactionClearedAt,
+                lockReleasedAt: lockReleasedAt);
         }
 
         public void OnLockAcquired(DateTime time)

@@ -107,7 +107,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.TransactionEx
                 claimableGasNotAvailableReportedAt: ClaimableGasNotAvailableReportedAt,
                 transactionSignedAt: TransactionSignedAt,
                 transactionBroadcastedAt: TransactionBroadcastedAt,
-                transactionExecutedAt: TransactionExecutedAt);
+                transactionExecutedAt: TransactionExecutedAt,
+                transactionClearedAt: TransactionClearedAt,
+                lockReleasedAt: LockReleasedAt);
         }
 
     }
