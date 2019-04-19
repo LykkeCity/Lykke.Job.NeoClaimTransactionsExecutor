@@ -104,7 +104,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
             {
                 TransactionId = aggregate.TransactionId,
                 NeoBlockchainIntegrationLayerId = aggregate.NeoBlockchainIntegrationLayerId,
-                UnsignedTransactionContext = aggregate.UnsignedTransactionContext,
+                UnsignedTransactionContext = aggregate.UnsignedTransactionContext ?? throw new ArgumentNullException(nameof(aggregate.UnsignedTransactionContext)),
                 Address = aggregate.Address
             }, Self);
         }
