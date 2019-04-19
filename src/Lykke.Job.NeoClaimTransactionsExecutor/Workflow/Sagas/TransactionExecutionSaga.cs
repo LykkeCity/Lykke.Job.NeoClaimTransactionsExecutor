@@ -138,7 +138,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
             sender.SendCommand(new BroadcastTransactionCommand
             {
                 TransactionId = aggregate.TransactionId,
-                SignedTransactionContext = aggregate.SignedTransactionContext
+                SignedTransactionContext = aggregate.SignedTransactionContext ?? throw new ArgumentNullException(nameof(aggregate.SignedTransactionContext))
             }, Self);
         }
 
