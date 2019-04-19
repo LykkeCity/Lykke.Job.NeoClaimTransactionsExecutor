@@ -11,7 +11,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories
 
         public static string BuildRowKey()
         {
-            return "_";
+            return string.Empty;
         }
     }
 }
