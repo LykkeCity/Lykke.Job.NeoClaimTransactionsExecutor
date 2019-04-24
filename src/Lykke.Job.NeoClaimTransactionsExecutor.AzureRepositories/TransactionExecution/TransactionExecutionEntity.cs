@@ -15,11 +15,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.TransactionEx
 
         public string GasAssetId { get; set; }
 
-        public string NeoBlockchainType { get; set; }
+        public string NeoBlockchainIntegrationLayerId { get; set; }
 
-        public string NeoBlockchainAssetId  { get; set; }
+        public string NeoBlockchainIntegrationLayerAssetId { get; set; }
 
-        public string GasBlockchainAssetId  { get;  set; }
+        public string GasBlockchainIntegrationLayerId { get;  set; }
 
         public string GasBlockchainIntegrationLayerAssetId { get; set; }
         
@@ -66,10 +66,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.TransactionEx
                 TransactionExecutedAt = aggregate.TransactionExecutedAt,
                 AssetInfoRetrievedAt = aggregate.AssetInfoRetrievedAt,
                 GasBlockchainIntegrationLayerAssetId = aggregate.GasBlockchainIntegrationLayerAssetId,
-                GasBlockchainAssetId  = aggregate.GasBlockchainAssetId ,
+                GasBlockchainIntegrationLayerId = aggregate.GasBlockchainIntegrationLayerId,
                 NeoAssetId = aggregate.NeoAssetId,
-                NeoBlockchainAssetId  = aggregate.NeoBlockchainAssetId ,
-                NeoBlockchainType = aggregate.NeoBlockchainType,
+                NeoBlockchainIntegrationLayerAssetId = aggregate.NeoBlockchainIntegrationLayerAssetId,
+                NeoBlockchainIntegrationLayerId = aggregate.NeoBlockchainIntegrationLayerId,
                 TransactionBroadcastedAt = aggregate.TransactionBroadcastedAt,
                 TransactionBuiltAt = aggregate.TransactionBuiltAt,
                 ClaimableGasNotAvailableReportedAt = aggregate.ClaimableGasNotAvailableReportedAt,
@@ -90,9 +90,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.AzureRepositories.TransactionEx
                 address: Address,
                 neoAssetId: NeoAssetId,
                 gasAssetId: GasAssetId,
-                neoBlockchainIntegrationLayerId: NeoBlockchainType,
-                NeoBlockchainAssetId : NeoBlockchainAssetId ,
-                GasBlockchainAssetId : GasBlockchainAssetId ,
+                neoBlockchainIntegrationLayerId: NeoBlockchainIntegrationLayerId,
+                neoBlockchainIntegrationLayerAssetId: NeoBlockchainIntegrationLayerAssetId,
+                gasBlockchainIntegrationLayerId: GasBlockchainIntegrationLayerId,
                 gasBlockchainIntegrationLayerAssetId: GasBlockchainIntegrationLayerAssetId,
                 unsignedTransactionContext: blobData?.UnsignedTransactionContext,
                 claimedGas: ClaimedGas,

@@ -10,9 +10,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             string address, 
             string neoAssetId,
             string gasAssetId,
-            string neoBlockchainType, 
-            string NeoBlockchainAssetId ,
-            string GasBlockchainAssetId ,
+            string neoBlockchainIntegrationLayerId, 
+            string neoBlockchainIntegrationLayerAssetId,
+            string gasBlockchainIntegrationLayerId,
             string gasBlockchainIntegrationLayerAssetId,
             string unsignedTransactionContext, 
             decimal? claimedGas, 
@@ -35,9 +35,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             Address = address;
             NeoAssetId = neoAssetId;
             GasAssetId = gasAssetId;
-            NeoBlockchainType = neoBlockchainType;
-            NeoBlockchainAssetId  = NeoBlockchainAssetId ;
-            GasBlockchainAssetId  = GasBlockchainAssetId ;
+            NeoBlockchainIntegrationLayerId = neoBlockchainIntegrationLayerId;
+            NeoBlockchainIntegrationLayerAssetId = neoBlockchainIntegrationLayerAssetId;
+            GasBlockchainIntegrationLayerId = gasBlockchainIntegrationLayerId;
             GasBlockchainIntegrationLayerAssetId = gasBlockchainIntegrationLayerAssetId;
             UnsignedTransactionContext = unsignedTransactionContext;
             ClaimedGas = claimedGas;
@@ -68,11 +68,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
 
         public string GasAssetId { get; }
 
-        public string NeoBlockchainType { get; private set; }
+        public string NeoBlockchainIntegrationLayerId { get; private set; }
 
-        public string NeoBlockchainAssetId  { get; private set; }
+        public string NeoBlockchainIntegrationLayerAssetId { get; private set; }
 
-        public string GasBlockchainAssetId  { get; private set; }
+        public string GasBlockchainIntegrationLayerId { get; private set; }
 
         public string GasBlockchainIntegrationLayerAssetId { get; private set; }
 
@@ -129,9 +129,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 address: address,
                 neoAssetId: neoAssetId,
                 gasAssetId: gasAssetId,
-                neoBlockchainType: null,
-                NeoBlockchainAssetId : null,
-                GasBlockchainAssetId : null,
+                neoBlockchainIntegrationLayerId: null,
+                neoBlockchainIntegrationLayerAssetId: null,
+                gasBlockchainIntegrationLayerId: null,
                 gasBlockchainIntegrationLayerAssetId: null,
                 unsignedTransactionContext: null,
                 claimedGas: null,
@@ -158,8 +158,8 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             string neoAssetId,
             string gasAssetId,
             string neoBlockchainIntegrationLayerId,
-            string NeoBlockchainAssetId ,
-            string GasBlockchainAssetId ,
+            string neoBlockchainIntegrationLayerAssetId,
+            string gasBlockchainIntegrationLayerId,
             string gasBlockchainIntegrationLayerAssetId,
             string unsignedTransactionContext,
             decimal? claimedGas,
@@ -184,9 +184,9 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
                 address: address,
                 neoAssetId: neoAssetId,
                 gasAssetId: gasAssetId,
-                neoBlockchainType: neoBlockchainIntegrationLayerId,
-                NeoBlockchainAssetId : NeoBlockchainAssetId ,
-                GasBlockchainAssetId : GasBlockchainAssetId ,
+                neoBlockchainIntegrationLayerId: neoBlockchainIntegrationLayerId,
+                neoBlockchainIntegrationLayerAssetId: neoBlockchainIntegrationLayerAssetId,
+                gasBlockchainIntegrationLayerId: gasBlockchainIntegrationLayerId,
                 gasBlockchainIntegrationLayerAssetId: gasBlockchainIntegrationLayerAssetId,
                 unsignedTransactionContext: unsignedTransactionContext,
                 claimedGas: claimedGas,
@@ -222,10 +222,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
         }
 
         public void OnAssetInfoRetrieved(DateTime time, 
-            string NeoBlockchainAssetId ,
+            string neoBlockchainIntegrationLayerAssetId,
             string neoBlockchainIntegrationLayerId,
             string gasBlockchainIntegrationLayerAssetId,
-            string GasBlockchainAssetId )
+            string gasBlockchainIntegrationLayerId)
         {
             if (!LockAcquired)
             {
@@ -236,11 +236,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Domain.Domain
             {
                 AssetInfoRetrievedAt = time;
 
-                NeoBlockchainAssetId  = NeoBlockchainAssetId ;
-                NeoBlockchainType = neoBlockchainIntegrationLayerId;
+                NeoBlockchainIntegrationLayerAssetId = neoBlockchainIntegrationLayerAssetId;
+                NeoBlockchainIntegrationLayerId = neoBlockchainIntegrationLayerId;
 
                 GasBlockchainIntegrationLayerAssetId = gasBlockchainIntegrationLayerAssetId;
-                GasBlockchainAssetId  = GasBlockchainAssetId ;
+                GasBlockchainIntegrationLayerId = gasBlockchainIntegrationLayerId;
             }
         }
 
