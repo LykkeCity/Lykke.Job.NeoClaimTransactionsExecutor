@@ -73,10 +73,10 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
             var aggregate = await _repository.GetAsync(evt.TransactionId);
 
             aggregate.OnAssetInfoRetrieved(DateTime.UtcNow, 
-                neoBlockchainIntegrationLayerAssetId: evt.NeoBlockchainIntegrationLayerAssetId,
+                NeoBlockchainAssetId : evt.NeoBlockchainAssetId ,
                 neoBlockchainIntegrationLayerId: evt.NeoBlockchainIntegrationLayerId,
                 gasBlockchainIntegrationLayerAssetId: evt.GasBlockchainIntegrationLayerAssetId,
-                gasBlockchainIntegrationLayerId: evt.GasBlockchainIntegrationLayerId);
+                GasAssetId: evt.GasAssetId);
             await _repository.SaveAsync(aggregate);
 
             _chaosKitty.Meow(aggregate.TransactionId);
@@ -103,7 +103,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Sagas
             sender.SendCommand(new SignTransactionCommand
             {
                 TransactionId = aggregate.TransactionId,
-                NeoBlockchainIntegrationLayerId = aggregate.NeoBlockchainIntegrationLayerId,
+                NeoBlockchainIntegrationLayerId = aggregate.NeoBlockchainType,
                 UnsignedTransactionContext = aggregate.UnsignedTransactionContext ?? throw new ArgumentNullException(nameof(aggregate.UnsignedTransactionContext)),
                 Address = aggregate.Address
             }, Self);

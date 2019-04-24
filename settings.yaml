@@ -20,17 +20,17 @@ NeoClaimTransactionsExecutorJob:
         WaitForTransactionRetryDelay:        
             settings-key: NeoClaimTransactionsExecutorJob-Cqrs-WaitForTransactionRetryDelay            
     NeoHotWalletAddress:
-        settings-key: NeoClaimTransactionsExecutorJob-NeoHotWalletAddress
+        settings-key: BilNeoHotWalletAddress
     NeoAssetId:
-        settings-key: NeoClaimTransactionsExecutorJob-NeoAssetId
+        settings-key: NeoAssetId
     GasAssetId:
-        settings-key: NeoClaimTransactionsExecutorJob-GasAssetId
+        settings-key: NeoGasAssetId
     SignFacadeApiKey:
         settings-key: NeoClaimTransactionsExecutorJob-SignFacadeApiKey
     SignFacadeUrl:
-        settings-key: NeoClaimTransactionsExecutorJob-SignFacadeUrl
+        settings-key: BilSignFacadeUrl
     NeoApiUrl:
-        settings-key: NeoClaimTransactionsExecutorJob-NeoApiUrl
+        settings-key: BilNeoApiUrl
     AssetsServiceUrl:
         settings-key: NeoClaimTransactionsExecutorJob-AssetsServiceUrl
     ClaimTriggerCronExpression:
