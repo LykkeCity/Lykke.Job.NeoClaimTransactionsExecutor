@@ -29,11 +29,11 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
             {
                 TransactionId = command.TransactionId,
                 NeoAssetId = command.NeoAssetId,
-                NeoBlockchainIntegrationLayerId = neoAsset.BlockchainIntegrationLayerId,
-                NeoBlockchainIntegrationLayerAssetId = neoAsset.BlockchainIntegrationLayerAssetId,
+                NeoBlockchainType = neoAsset.BlockchainIntegrationLayerId,
+                NeoBlockchainAssetId = neoAsset.BlockchainIntegrationLayerAssetId,
                 GasAssetId = command.GasAssetId,
-                GasBlockchainIntegrationLayerId = gasAsset.BlockchainIntegrationLayerId,
-                GasBlockchainIntegrationLayerAssetId = gasAsset.BlockchainIntegrationLayerAssetId
+                GasBlockchainType = gasAsset.BlockchainIntegrationLayerId,
+                GasBlockchainAssetId = gasAsset.BlockchainIntegrationLayerAssetId
             });
 
             _chaosKitty.Meow(command.TransactionId);

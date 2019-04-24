@@ -32,13 +32,25 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor
 
                     // TODO: You could add extended logging configuration here:
 
-                    logs.Extended = p =>
+                    logs.Extended = opt =>
                     {
-                        p.AddAdditionalSlackChannel("CommonBlockChainIntegration");
-                        p.AddAdditionalSlackChannel("CommonBlockChainIntegrationImportantMessages", x =>
-                        {
-                            x.MinLogLevel = LogLevel.Warning;
-                        });
+                        opt.AddAdditionalSlackChannel(
+                            "CommonBlockChainIntegration",
+                            slackOptions =>
+                            {
+                                slackOptions.MinLogLevel = LogLevel.Information;
+                                slackOptions.IncludeHealthNotifications();
+                                slackOptions.SpamGuard.DisableGuarding();
+                            });
+
+                        opt.AddAdditionalSlackChannel(
+                            "CommonBlockChainIntegrationImportantMessages",
+                            slackOptions =>
+                            {
+                                slackOptions.MinLogLevel = LogLevel.Warning;
+                                slackOptions.IncludeHealthNotifications();
+                                slackOptions.SpamGuard.DisableGuarding();
+                            });
                     };
 
                 };

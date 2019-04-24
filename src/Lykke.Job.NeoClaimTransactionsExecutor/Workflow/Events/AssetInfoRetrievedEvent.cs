@@ -12,12 +12,12 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Events
 
         public string GasAssetId { get; set; }
 
-        public string NeoBlockchainIntegrationLayerAssetId { get; set; }
+        public string NeoBlockchainAssetId { get; set; }
 
-        public string NeoBlockchainIntegrationLayerId { get; set; }
+        public string NeoBlockchainType { get; set; }
 
-        public string GasBlockchainIntegrationLayerAssetId { get; set; }
+        public string GasBlockchainAssetId { get; set; }
 
-        public string GasBlockchainIntegrationLayerId { get; set; }
+        public string GasBlockchainType { get; set; }
     }
 }

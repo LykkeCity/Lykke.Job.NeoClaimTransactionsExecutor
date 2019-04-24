@@ -10,6 +10,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands
         
         public decimal Amount { get; set; }
 
-        public string GasBlockchainIntegrationLayerAssetId { get; set; }
+        public string GasBlockchainAssetId { get; set; }
     }
 }

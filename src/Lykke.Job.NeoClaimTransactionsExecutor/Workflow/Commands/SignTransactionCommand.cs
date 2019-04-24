@@ -12,6 +12,6 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands
 
         public string UnsignedTransactionContext { get; set; }
 
-        public string NeoBlockchainIntegrationLayerId { get; set; }
+        public string NeoBlockchainType { get; set; }
     }
 }

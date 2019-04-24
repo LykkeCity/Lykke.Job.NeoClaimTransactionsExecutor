@@ -34,7 +34,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.CommandHandlers
         public async Task<CommandHandlingResult> Handle(WaitForTransactionEndingCommand command,
             IEventPublisher publisher)
         {
-            var blockchainAsset = await _client.GetAssetAsync(command.GasBlockchainIntegrationLayerAssetId);
+            var blockchainAsset = await _client.GetAssetAsync(command.GasBlockchainAssetId);
 
             var tx = await _client.TryGetBroadcastedSingleTransactionAsync(command.TransactionId, blockchainAsset);
 
