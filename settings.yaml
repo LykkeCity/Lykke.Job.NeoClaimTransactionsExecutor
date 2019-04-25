@@ -1,0 +1,52 @@
+NeoClaimTransactionsExecutorJob:
+    Db:
+        LogsConnString:
+            settings-key: NeoClaimTransactionsExecutorJob-LogsConnString
+            types:
+                - AzureTableStorage
+        DataConnString:
+            settings-key: NeoClaimTransactionsExecutorJob-DataConnString
+            types:
+                - AzureTableStorage
+        MongoConnString:
+            settings-key: NeoClaimTransactionsExecutorJob-MongoConnString
+    Cqrs:
+        RabbitConnectionString:
+            settings-key: CqrsRabbitConnString
+            types:
+                - RabbitMq
+        RetryDelay:        
+            settings-key: NeoClaimTransactionsExecutorJob-Cqrs-RetryDelay
+        WaitForTransactionRetryDelay:        
+            settings-key: NeoClaimTransactionsExecutorJob-Cqrs-WaitForTransactionRetryDelay            
+    NeoHotWalletAddress:
+        settings-key: BilNeoHotWalletAddress
+    NeoAssetId:
+        settings-key: NeoAssetId
+    GasAssetId:
+        settings-key: NeoGasAssetId
+    SignFacadeApiKey:
+        settings-key: NeoClaimTransactionsExecutorJob-SignFacadeApiKey
+    SignFacadeUrl:
+        settings-key: BilSignFacadeUrl
+    NeoApiUrl:
+        settings-key: BilNeoApiUrl
+    AssetsServiceUrl:
+        settings-key: AssetsServiceUrl
+    ClaimTriggerCronExpression:
+        settings-key: NeoClaimTransactionsExecutorJob-ClaimTriggerCronExpression
+    ChaosKitty:
+        StateOfChaos:
+            settings-key: NeoClaimTransactionsExecutorJob-ChaosKittyState
+SlackNotifications:
+    AzureQueue:
+        ConnectionString:
+            settings-key: SlackNotificationsConnString
+            types:
+                - AzureTableStorage
+        QueueName:
+            settings-key: SlackQueueName
+MonitoringServiceClient:
+    MonitoringServiceUrl:
+        settings-key: MonitoringServiceUrl
+
