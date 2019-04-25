@@ -32,7 +32,7 @@ NeoClaimTransactionsExecutorJob:
     NeoApiUrl:
         settings-key: BilNeoApiUrl
     AssetsServiceUrl:
-        settings-key: NeoClaimTransactionsExecutorJob-AssetsServiceUrl
+        settings-key: AssetsServiceUrl
     ClaimTriggerCronExpression:
         settings-key: NeoClaimTransactionsExecutorJob-ClaimTriggerCronExpression
     ChaosKitty:
