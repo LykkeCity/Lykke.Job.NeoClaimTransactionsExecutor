@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Events;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow

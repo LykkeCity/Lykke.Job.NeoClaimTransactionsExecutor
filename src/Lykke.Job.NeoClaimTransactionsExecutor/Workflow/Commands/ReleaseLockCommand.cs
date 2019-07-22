@@ -1,11 +1,12 @@
 ﻿using System;
-using MessagePack;
+using ProtoBuf;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Commands
 {
-    [MessagePackObject(keyAsPropertyName: true)]
+    [ProtoContract]
     public class ReleaseLockCommand
     {
+        [ProtoMember(1)]
         public Guid TransactionId { get; set; }
     }
 }

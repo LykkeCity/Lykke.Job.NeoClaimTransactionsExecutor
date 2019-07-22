@@ -1,5 +1,4 @@
-﻿using System;
-using Lykke.Common.Chaos;
+﻿using Lykke.Common.Chaos;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Settings.JobSettings
 {

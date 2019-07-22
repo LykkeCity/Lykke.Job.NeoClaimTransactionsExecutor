@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MessagePack;
+using ProtoBuf;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Events
 {
-    [MessagePackObject(keyAsPropertyName: true)]
+    [ProtoContract]
     public class ClaimbaleGasNotAvailiableEvent
     {
+        [ProtoMember(1)]
         public Guid TransactionId { get; set; }
     }
 }
