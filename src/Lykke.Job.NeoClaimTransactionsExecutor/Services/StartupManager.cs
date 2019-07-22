@@ -29,6 +29,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Services
         {
             _cqrsEngine.StartAll();
 
+            _log.Info($"Starting job :: cron expression {_starterSettings.ClaimTriggerCronExpression}");
             RecurringJob.AddOrUpdate("neo-claim-gas",
                 () => StartClaimTransaction(),
                 () => _starterSettings.ClaimTriggerCronExpression,
