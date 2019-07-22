@@ -89,7 +89,7 @@ namespace Lykke.Job.NeoClaimTransactionsExecutor.Modules
                     new RabbitMqConventionEndpointResolver
                     (
                         "RabbitMq",
-                        SerializationFormat.MessagePack,
+                        SerializationFormat.ProtoBuf,
                         environment: "lykke"
                     )
                 ),

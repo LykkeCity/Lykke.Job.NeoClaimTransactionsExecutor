@@ -1,11 +1,12 @@
 ﻿using System;
-using MessagePack;
+using ProtoBuf;
 
 namespace Lykke.Job.NeoClaimTransactionsExecutor.Workflow.Events
 {
-    [MessagePackObject(keyAsPropertyName: true)]
+    [ProtoContract]
     public class TransactionClearedEvent
     {
+        [ProtoMember(1)]
         public Guid TransactionId { get; set; }
     }
 }
